@@ -1,0 +1,8 @@
+### Digital Audio signal Processing and Machine learning for Audio
+This is an outline of the runners earbuds, applying fundemental skills to machine learning and understanding audio signal processing
+
+## Research
+
+## Whats to come
+- scanner to measure ear size for the perfect size fit people ears to avoid discormfot feeling and make it for personalized to the user
+- user can design there earbuds with color/pattern/design to make runners ear there own
