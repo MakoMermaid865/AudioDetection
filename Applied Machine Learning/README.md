@@ -1,4 +1,4 @@
-### Digital Audio signal Processing and Machine learning for Audio
+### Smart Runner Earbuds: Digital Audio Signal Processing + Machine Learning
 This is an outline of the runners earbuds, applying fundemental skills to machine learning and understanding audio signal processing
 
 ## Research
