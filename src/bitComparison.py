@@ -1,26 +1,76 @@
 import bitstring
 from bitstring import BitArray
 
-base = BitArray(bytes=open('src/NoiseWithHonk.wav', 'rb').read())
+import librosa
+import librosa.display
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy
+from scipy.signal import correlate
+
+def create_spectrogram(file_path):
+    # 1. Load the audio file
+    # y is the audio time series, sr is the sampling rate
+    y, sr = librosa.load(file_path)
+
+    # 2. Compute the Short-Time Fourier Transform (STFT)
+    # We take the absolute value to get the magnitude
+    stft = np.abs(librosa.stft(y))
+
+    # 3. Convert amplitude to decibels (log scale)
+    # This makes the visualization much easier for humans to read
+    db_spectrogram = librosa.amplitude_to_db(stft, ref=np.max)
+
+    
+    # #4. Create the plot
+    # plt.figure(figsize=(12, 6))
+    # librosa.display.specshow(db_spectrogram, sr=sr, x_axis='time', y_axis='hz', cmap='magma')
+    
+    # # Add a color bar and labels
+    # plt.colorbar(format='%+2.0f dB')
+    # plt.title(f'Spectrogram: {file_path}')
+    # plt.tight_layout()
+    # plt.show()
+
+    normSpec = librosa.util.normalize(db_spectrogram, axis=None)
+
+
+    return normSpec
+
+
+base = BitArray(bytes=open('src/test1.wav', 'rb').read())
 ##print(base.bin)
 
 carHonk = BitArray(bytes=open('src/CarHonk1.wav', 'rb').read())
 
-chunk_size = 100000
+chunk_size = 50000
 
-for i in range(0, len(base), chunk_size):
-    # Get the chunk from index i to i + chunk_size
-    chunk = base[i:i + chunk_size]
+
+
+# for i in range(0, len(base), chunk_size):
+#     # Get the chunk from index i to i + chunk_size
+#     chunk = base[i:i + chunk_size]
     
-    #print(f"Processing chunk starting at index {i}: {chunk}")
+#     #print(f"Processing chunk starting at index {i}: {chunk}")
 
-    if(chunk.bin in carHonk.bin):{
-        print("HONK")
-    }
-    else: {
-        print("Nothing")
-    }
+#     if(chunk.bin in carHonk.bin):{
+#         print("HONK")
+#     }
+#     else: {
+#         print("Nothing")
+#     }
 
+print('file1')
+spectrogram1 = create_spectrogram('src/test1.wav')
+
+print('file2')
+spectrogram2 = create_spectrogram('src/wavtest.wav')
+
+
+corr = scipy.signal.correlate2d(spectrogram1, spectrogram2, mode="valid")
+similarity = corr.min()
+
+print("Similarity score:", similarity)
     # Process the chunk
     
 
